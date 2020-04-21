@@ -27,7 +27,7 @@ Grab the code from this repository either by git cloning or downloading the zip 
 ```
 $ balena push <MY_APP_NAME>
 ```
-replacing `<MY_APP_NAME>` with the name you selected when you created you application in step 1. With this single command, the balena CLI will initiate a build on the cloud for the correct architecture and every device in you fleet will start running this code. Once the code is deployed you should see some device log output like the following, indicating successful inference of our parrot image:
+replacing `<MY_APP_NAME>` with the name you selected when you created your application in step 1. With this single command, the balena CLI will initiate a build on the cloud for the correct architecture and every device in your fleet will start running this code. Once the code is deployed you should see some device log output like the following, indicating successful inference of our parrot image:
 ```
 21.04.20 09:48:06 (+0200)  model  Copying Model to shared volume...
 21.04.20 09:48:06 (+0200)  model  'model.tflite' -> 'shared-model/model.tflite'
@@ -41,7 +41,7 @@ replacing `<MY_APP_NAME>` with the name you selected when you created you applic
 
 ## Update your model
 
-Okay, so now we know how to deploy and update our code easily, but how do we update or change our model? In this project, you will notice that the code is split into `edge-logic` and `models`. These containers can be happily updated without affecting one another too much. If you want to deploy a new model to your fleet, simply drop your new model and its labels into the "models" folder and make sure to name them `model.tflite` and `labels.txt`. 
+Okay, so now we know how to deploy and update our code easily, but how do we update or change our model? In this project, you will notice that the code is split into `edge-logic` and `models`. These containers can be happily updated without affecting one another too much. If you want to deploy a new model to your fleet, simply drop your new model and its labels into the "models" folder and make sure to name them `model.tflite` and `labels.txt`. You can find some great premade models [here][coral-models]. Make sure to select one of the "classification" models for this demo.
 
 With your new model added, perform another `balena push` to your application and you should see the `model` service update and begin running. Super easy!
 
