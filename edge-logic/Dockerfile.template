@@ -20,7 +20,6 @@ COPY 99-tpu.rules /etc/udev/rules.d/99-tpu.rules
 WORKDIR /usr/src/app
 
 # Copy our models and source into the docker context
-COPY models models
 COPY src src
 COPY images images
 COPY run.sh run.sh

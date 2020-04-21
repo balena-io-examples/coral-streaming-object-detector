@@ -1,0 +1,27 @@
+version: '2.1'
+networks: {}
+volumes:
+  model-data: {}
+services:
+  edge-logic:
+    build: ./edge-logic
+    privileged: true
+    tty: true
+    restart: on-failure
+    network_mode: host
+    depends_on:
+      - model
+    volumes:
+      - 'model-data:/models'
+    labels:
+      io.balena.features.kernel-modules: '1'
+      io.balena.features.firmware: '1'
+      io.balena.features.dbus: '1'
+      io.balena.features.supervisor-api: '1'
+      io.balena.features.balena-api: '1'
+  model:
+    build: ./models
+    tty: true
+    restart: no
+    volumes:
+      - 'model-data:/shared-model'
