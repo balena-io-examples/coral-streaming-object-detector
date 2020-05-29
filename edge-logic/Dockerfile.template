@@ -1,16 +1,8 @@
 # Built using https://coral.withgoogle.com/tutorials/accelerator/
-FROM balenalib/%%BALENA_MACHINE_NAME%%-debian
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:latest
 
-# Add Google Coral sources lists
-RUN echo "deb https://packages.cloud.google.com/apt coral-edgetpu-stable main" | sudo tee /etc/apt/sources.list.d/coral-edgetpu.list
-RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-
-# Install the TPU packages we will need
-RUN install_packages libedgetpu1-std \
-            libedgetpu-dev \
-            python3-edgetpu \
-            edgetpu-examples \
-            python3-pip
+# Install python3
+RUN install_packages python3-pip
 
 # udev in the container to enable TPU correctly
 ENV UDEV=1
