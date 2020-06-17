@@ -115,40 +115,6 @@ def main():
   app.router.add_get('/ice-config', config)
   web.run_app(app, port=80)
 
-  try:
-    # Prepare labels.
-    labels = dataset_utils.read_label_file(args.label)
-    print("Labels loaded")
-  except:
-    print("Error loading labels")
-    exit(1)
-  
-  try:
-    # Initialize engine.
-    engine = DetectionEngine(args.model)
-  except:
-    print("Error loading model")
-    exit(1)
-
-  img = Image.open(args.image)
-  # Run inference.
-  objs = engine.detect_with_image(img,
-                                  threshold=0.05,
-                                  relative_coord=False,
-                                  top_k=10)
-
-  # Print and draw detected objects.
-  for obj in objs:
-    print('-----------------------------------------')
-    if labels:
-      print(labels[obj.label_id])
-    print('score =', obj.score)
-    box = obj.bounding_box.flatten().tolist()
-    print('box =', box)
-
-  if not objs:
-    print('No objects detected.')
-
 checkDeviceReadiness()
 
 pcs = set()

@@ -4,6 +4,8 @@ from aiohttp import web
 from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack, RTCIceServer, RTCConfiguration
 from aiohttp_basicauth import BasicAuthMiddleware
 
+import detect
+
 class CameraDevice():
     def __init__(self):
         self.cap = cv2.VideoCapture(0)
@@ -24,8 +26,7 @@ class CameraDevice():
 
     async def get_latest_frame(self):
         ret, frame = self.cap.read()
-        #TODO: hook in inference here
 
-        img = cv2.rectangle(frame, (80,80), (140,140), (255,0,0), 2)
+        img = detect.objects(frame)
         await asyncio.sleep(0)
         return self.rotate(img)
