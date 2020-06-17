@@ -81,11 +81,6 @@ def checkDeviceReadiness():
         print('Video device is ready')
 
 def main():
-  parser = argparse.ArgumentParser()
-  parser.add_argument('--model', help='File path of Tflite model.', required=True)
-  parser.add_argument('--label', help='File path of label file.', required=True)
-  parser.add_argument('--image', help='File path of the image to be recognized.', required=True)
-  args = parser.parse_args()
 
   auth = []
   if 'username' in os.environ and 'password' in os.environ:

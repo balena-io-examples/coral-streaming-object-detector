@@ -56,3 +56,9 @@ With your new model added, perform another `balena push` to your application and
 [balena-cli]:https://www.balena.io/docs/reference/balena-cli/
 [provision-device-coral]:https://www.balena.io/docs/learn/getting-started/coral-dev/python/#provision-device
 
+
+
+### Dev Mode
+
+#dev-run=pip3 install --user watchgod
+#dev-cmd-live=watchgod app.main || balena-idle

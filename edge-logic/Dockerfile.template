@@ -1,12 +1,6 @@
 FROM shaunmulligan/coral-dev-base:latest
 
-#dev-run=pip3 install --user watchgod
-#dev-cmd-live=watchgod app.main --args --model /models/model.tflite --label /models/labels.txt --image images/parrot.jpg || balena-idle
 COPY app/ /usr/src/app/
-
-# # udev in the container to enable TPU correctly
-ENV UDEV=1
-COPY 99-tpu.rules /etc/udev/rules.d/99-tpu.rules
 
 #need to have workdir because watchgod doesn't seem to respect path argument :(
 WORKDIR /usr/src/app

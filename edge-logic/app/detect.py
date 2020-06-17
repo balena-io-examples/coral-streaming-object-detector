@@ -35,9 +35,13 @@ def objects(frame):
     for obj in objs:
         print('-----------------------------------------')
         if labels:
-            print(labels[obj.label_id])
+            label = labels[obj.label_id]
+            print(label)
             print('score =', obj.score)
             box = obj.bounding_box.flatten().tolist()
-            frame = cv2.rectangle(frame, (int(box[0]),int(box[1])), (int(box[2]),int(box[3])), (255,0,0), 2)
-
+            x0 = int(box[0])
+            y0 = int(box[1])
+            frame = cv2.rectangle(frame, (x0,y0), (int(box[2]),int(box[3])), (255,0,0), 2)
+            frame = cv2.putText(frame, label, (x0, y0+30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), 2)
+    
     return frame

@@ -29,4 +29,5 @@ class CameraDevice():
 
         img = detect.objects(frame)
         await asyncio.sleep(0)
-        return self.rotate(img)
+        # return self.rotate(img)
+        return img
