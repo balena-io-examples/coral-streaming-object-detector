@@ -1,0 +1,24 @@
+# This is pushed to https://hub.docker.com/repository/docker/shaunmulligan/coral-dev-base
+FROM balenalib/coral-dev-debian:latest AS compile-image
+
+# Install python3
+RUN install_packages \
+        python3-pip \
+        python3-opencv \
+        python3-setuptools \
+        build-essential \
+        python3-dev \
+        libssl-dev \
+        libavdevice-dev \
+        libavfilter-dev \
+        libopus-dev \
+        libvpx-dev \
+        libffi-dev \
+        libsrtp2-dev \
+        pkg-config
+
+
+RUN pip3 install --user wheel aiohttp aiortc aiohttp_basicauth
+
+# Make sure scripts in .local are usable:
+ENV PATH=/root/.local/bin:$PATH
