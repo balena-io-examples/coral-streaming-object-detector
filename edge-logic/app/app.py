@@ -11,7 +11,6 @@ from peerconnection import PeerConnectionFactory
 from rtcvideo import RTCVideoStream
 import server
 
-# from edgetpu.classification.engine import ClassificationEngine
 from edgetpu.detection.engine import DetectionEngine
 from edgetpu.utils import dataset_utils
 from PIL import Image

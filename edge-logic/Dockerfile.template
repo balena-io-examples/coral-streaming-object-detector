@@ -2,7 +2,6 @@ FROM shaunmulligan/coral-dev-base:latest
 
 COPY app/ /usr/src/app/
 
-#need to have workdir because watchgod doesn't seem to respect path argument :(
 WORKDIR /usr/src/app
 
 COPY run.sh run.sh
