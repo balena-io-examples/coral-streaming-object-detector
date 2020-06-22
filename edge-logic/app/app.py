@@ -4,6 +4,7 @@ from time import sleep
 from aiohttp import web
 from av import VideoFrame
 from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack, RTCIceServer, RTCConfiguration
+from aiortc.contrib.media import MediaPlayer
 from aiohttp_basicauth import BasicAuthMiddleware
 
 from camera import CameraDevice
@@ -23,7 +24,7 @@ async def offer(request):
     pc = pc_factory.create_peer_connection()
     pcs.add(pc)
     # Add local media
-    local_video = RTCVideoStream(camera_device)
+    local_video = RTCVideoStream(player)
     pc.addTrack(local_video)
     @pc.on('iceconnectionstatechange')
     async def on_iceconnectionstatechange():
@@ -48,7 +49,7 @@ async def mjpeg_handler(request):
     })
     await response.prepare(request)
     while True:
-        data = await camera_device.get_jpeg_frame()
+        data = await player.get_jpeg_frame()
         await asyncio.sleep(0.2) # this means that the maximum FPS is 5
         await response.write(
             '--{}\r\n'.format(boundary).encode('utf-8'))
@@ -109,10 +110,15 @@ def main():
   app.router.add_get('/ice-config', config)
   web.run_app(app, port=80)
 
-checkDeviceReadiness()
-
 pcs = set()
-camera_device = CameraDevice()
+
+# open media source
+if "CAMERA" in os.environ:
+    checkDeviceReadiness()
+    #Load Camera based on environment variable, default to /dev/video0
+    player = CameraDevice(int(os.getenv('CAMERA', 0)))
+else:
+    player = CameraDevice("/usr/src/video/construction.mp4")
 
 # Factory to create peerConnections depending on the iceServers set by user
 pc_factory = PeerConnectionFactory()

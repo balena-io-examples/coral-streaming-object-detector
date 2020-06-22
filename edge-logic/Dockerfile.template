@@ -1,5 +1,7 @@
 FROM balenaplayground/coral-dev-base:latest
 
+COPY video/ /usr/src/video/
+
 COPY app/ /usr/src/app/
 
 WORKDIR /usr/src/app
