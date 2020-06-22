@@ -1,4 +1,4 @@
-FROM shaunmulligan/coral-dev-base:latest
+FROM balenaplayground/coral-dev-base:latest
 
 COPY app/ /usr/src/app/
 
