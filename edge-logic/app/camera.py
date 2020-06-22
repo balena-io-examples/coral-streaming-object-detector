@@ -1,9 +1,5 @@
-import asyncio, json, os, cv2, platform, sys
+import asyncio, cv2, sys
 from time import sleep
-from aiohttp import web
-from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack, RTCIceServer, RTCConfiguration
-from aiohttp_basicauth import BasicAuthMiddleware
-
 import detect
 
 class CameraDevice():
