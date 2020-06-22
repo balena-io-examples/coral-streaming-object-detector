@@ -1,3 +1,7 @@
 # ignore .git and .cache folders
 .git
 .cache
+
+# Ignore images and readme from docker build
+README.md
+*.png
