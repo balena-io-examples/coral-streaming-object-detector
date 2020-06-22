@@ -3,6 +3,11 @@ from time import sleep
 from aiohttp import web
 from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack, RTCIceServer, RTCConfiguration
 from aiohttp_basicauth import BasicAuthMiddleware
+import logging
+
+# Increase logging level for ICE to Warnings only
+logger = logging.getLogger("ice")
+logger.setLevel(logging.WARN)
 
 class PeerConnectionFactory():
     def __init__(self):

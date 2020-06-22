@@ -1,7 +1,11 @@
-import cv2
+import cv2, os
 from edgetpu.detection.engine import DetectionEngine
 from edgetpu.utils import dataset_utils
 from PIL import Image
+import logging
+
+LOGLEVEL = os.environ.get('LOGLEVEL', 'INFO').upper()
+logging.basicConfig(level=LOGLEVEL)
 
 #Constants
 LABELS_PATH = "/models/labels.txt"
@@ -10,16 +14,17 @@ MODEL_PATH = "/models/model.tflite"
 try:
     # Prepare labels.
     labels = dataset_utils.read_label_file(LABELS_PATH)
-    print("Labels loaded")
+    logging.debug("Labels loaded")
 except:
-    print("Error loading labels")
+    logging.error("Error loading labels")
     exit(1)
 
 try:
     # Initialize engine.
     engine = DetectionEngine(MODEL_PATH)
+    logging.debug("Model loaded")
 except:
-    print("Error loading model")
+    logging.error("Error loading model")
     exit(1)
 
 def objects(frame):
@@ -33,11 +38,12 @@ def objects(frame):
 
     # Print and draw detected objects.
     for obj in objs:
-        print('-----------------------------------------')
+        logging.debug('-----------------------------------------')
         if labels:
             label = labels[obj.label_id]
-            print(label)
-            print('score =', obj.score)
+            logging.debug(label)
+            logging.debug('Confidence Score: ')
+            logging.debug(obj.score)
             box = obj.bounding_box.flatten().tolist()
             x0 = int(box[0])
             y0 = int(box[1])

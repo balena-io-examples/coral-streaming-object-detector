@@ -16,6 +16,11 @@ from edgetpu.detection.engine import DetectionEngine
 from edgetpu.utils import dataset_utils
 from PIL import Image
 
+import logging
+
+LOGLEVEL = os.environ.get('LOGLEVEL', 'INFO').upper()
+logging.basicConfig(level=LOGLEVEL)
+
 async def offer(request):
     params = await request.json()
     offer = RTCSessionDescription(
@@ -74,28 +79,28 @@ async def on_shutdown(app):
 
 def checkDeviceReadiness():
     if not os.path.exists('/dev/video0') and platform.system() == 'Linux':
-        print('Video device is not ready')
+        logging.error('Video device is not ready\n')
         sleep(1)
         sys.exit()
     else:
-        print('Video device is ready')
+        logging.info('Video device is ready\n')
 
 def main():
 
   auth = []
   if 'username' in os.environ and 'password' in os.environ:
-      print('\n#############################################################')
-      print('Authorization is enabled.')
-      print('Your balenaCam is password protected.')
-      print('#############################################################\n')
+      logging.info('#############################################################')
+      logging.info('Authorization is enabled.')
+      logging.info('Your balenaCam is password protected.')
+      logging.info('#############################################################\n')
       auth.append(BasicAuthMiddleware(username = os.environ['username'], password = os.environ['password']))
   else:
-      print('\n#############################################################')
-      print('Authorization is disabled.')
-      print('Anyone can access your balenaCam, using the device\'s URL!')
-      print('Set the username and password environment variables \nto enable authorization.')
-      print('For more info visit: \nhttps://github.com/balena-io-playground/balena-cam')
-      print('#############################################################\n')
+      logging.info('#############################################################')
+      logging.info('Authorization is disabled.')
+      logging.info('Anyone can access your balenaCam, using the device\'s URL!')
+      logging.info('Set the username and password environment variables to enable authorization.')
+      logging.info('For more info visit: https://github.com/balena-io-playground/balena-cam')
+      logging.info('#############################################################\n')
 
   app = web.Application(middlewares=auth)
   app.on_shutdown.append(on_shutdown)
@@ -108,7 +113,8 @@ def main():
   app.router.add_post('/offer', offer)
   app.router.add_get('/mjpeg', mjpeg_handler)
   app.router.add_get('/ice-config', config)
-  web.run_app(app, port=80)
+
+  web.run_app(app, access_log=None, port=80)
 
 pcs = set()
 
