@@ -274,24 +274,5 @@ function startMJPEG() {
   showContainer('mjpeg');
 }
 
-var isSafari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
-var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-var safariOnIos = isSafari && iOS;
-if (window.navigator.userAgent.indexOf("Edge") > -1  || safariOnIos) {
-  //state 3 means the client is a Microsoft Edge or Safari on iOS
-  state = 3;
-  startMJPEG();
-} else {
-  var config = null;
-  fetch('/ice-config').then(function(response) {
-    return response.json();
-  }).then(function(configData){
-    config = configData;
-    primaryPeerConnection = createNewPeerConnection();
-  }).catch(function(e){
-    console.error('Error while getting the ICE server configuration');
-    console.error(e);
-    state = 3;
-    startMJPEG();
-  });
-}
+state = 3;
+startMJPEG();
