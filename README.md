@@ -1,6 +1,6 @@
-# WebRTC Streaming Object Detector with Coral.ai and BalenaCloud
+# Streaming Object Detector with Coral.ai and BalenaCloud
 
-This guide will help you deploy a webRTC streaming camera feed with realtime people detection using the [Coral.ai TPU][coral] enabled devices. It will work on the official [Coral.ai dev board][coral-dev].
+This guide will help you deploy a streaming camera feed with realtime people detection using the [Coral.ai TPU][coral] enabled devices. It will work on the official [Coral.ai dev board][coral-dev].
 
 ![Demo Streaming Person Detector](images/demo.png)
 
