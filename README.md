@@ -1,6 +1,6 @@
-# Streaming Object Detector with Coral.ai and BalenaCloud
+# Streaming Object Detector with Coral and BalenaCloud
 
-This guide will help you deploy a streaming camera feed with realtime people detection using the [Coral.ai TPU][coral] enabled devices. It will work on the official [Coral.ai dev board][coral-dev].
+This guide will help you deploy a streaming camera feed with realtime people detection using the [Coral Edge TPU][coral] for on-device ML inferencing. This example is designed to work with the [Coral Dev Board][coral-dev], but should work with other balena-compatible devices that have an Edge TPU.
 
 ![Demo Streaming Person Detector](images/demo.png)
 
@@ -12,17 +12,17 @@ Table of Contents:
 
 ## Setup a fleet of devices
 
-In balenaCloud code is deployed to groups of devices called "applications". To deploy code to your device(s) remotely you need to first [sign up for an account on balenaCloud](https://dashboard.balena-cloud.com/signup). Once you are signed in, create a new application and call it something like `edge-ai`.
+In balenaCloud, code is deployed to groups of devices called "applications". To deploy code to your device(s) remotely, you need to first [sign up for an account on balenaCloud](https://dashboard.balena-cloud.com/signup). Once you are signed in, create a new application and call it something like `edge-ai`.
 
-You now are ready to add devices to your fleet. To get a device online and connected to balenaCloud, complete the ["Add your first device"][add-new-device-coral] and ["Provision Device"][provision-device-coral] steps of the [Getting Started Guide][getting-started-balena] for your specific device.
+Now you are ready to add devices to your fleet. To get your Coral Dev Board online and connected to balenaCloud, follow our walkthrough to [Get started with Google Coral Dev Board and Python][getting-started-balena] (you can return here after you [provision your device][provision-device-coral]).
 
-When your device is provisioned, you should have something that looks like the below:
+When your device is provisioned, you should see your device listed as shown here:
 
 ![Device added to balenaCloud Dashboard](images/device-added.png)
 
 ## Deploy the demo code
 
-Now let's deploy some code. Make sure you have the [balena CLI][balena-cli] installed and open up your favorite console terminal. In the console, make sure you are logged into your balenaCloud account.
+Now let's deploy some code. Make sure you have the [balena CLI][balena-cli] installed and open up your favorite console terminal. In the console, make sure you are logged into your balenaCloud account:
 ```
 $ balena login
 ```
@@ -30,7 +30,7 @@ Grab the code from this repository either by git cloning or downloading the zip 
 ```
 $ balena push <MY_APP_NAME>
 ```
-replacing `<MY_APP_NAME>` with the name you selected when you created your application in step 1. With this single command, the balena CLI will initiate a build on the cloud for the correct architecture and every device in your fleet will start running this code. Once the code is deployed you should see some device log output like the following, and if you navigate to the devices IP address or [balenaCloud public Device URL][public-url] you should be served a website with your video stream and blue rectangles will indicate the detected objects:
+Replace `<MY_APP_NAME>` with the name you selected when you created your application in step 1. With this single command, the balena CLI will initiate a build on the cloud for the correct architecture and every device in your fleet will start running this code. Once the code is deployed you should see some device log output like the following, and if you navigate to the devices IP address or [balenaCloud public Device URL][public-url], you should see a website with your video stream and blue rectangles indicating the detected objects:
 ```
 [Logs]    [6/22/2020, 5:23:24 PM] [edge-logic] INFO:root:#############################################################
 [Logs]    [6/22/2020, 5:23:24 PM] [edge-logic] INFO:root:Authorization is disabled.
@@ -49,7 +49,9 @@ This demo can either stream from a video file or from a camera device. By defaul
 
 ## Update your model
 
-Okay, so now we know how to deploy and update our code easily, but how do we update or change our model? In this project, you will notice that the code is split into `edge-logic` and `models`. These containers can be happily updated without affecting one another too much. If you want to deploy a new model to your fleet, simply drop your new model and its labels into the "models" folder and make sure to name them `model.tflite` and `labels.txt`. You can find some great premade models [here][coral-models]. Make sure to select one of the "classification" models for this demo.
+Okay, so now we know how to deploy and update our code easily, but how do we update or change our model? In this project, you will notice that the code is split into `edge-logic` and `models`. These containers can be happily updated without affecting one another too much. If you want to deploy a new model to your fleet, simply drop your new model and its labels into the "models" folder and make sure to name them `model.tflite` and `labels.txt`. 
+
+You can find some great pre-trained models that are compatible with the Coral Edge TPU at [coral.ai/models][coral-models]. For compatibility with this demo, be sure to select one of the "detection" models. Or if you want to create your own model, see the [Coral docs about model compatibility](https://coral.ai/docs/edgetpu/models-intro/).
 
 With your new model added, perform another `balena push` to your application and you should see the `model` service update and begin running. Super easy!
 
@@ -75,10 +77,10 @@ To protect your balenaCam devices using a username and a password set the follow
 [coral-dev]:https://coral.ai/products/dev-board
 [coral-usb]:https://coral.ai/products/accelerator/
 [coral-models]:https://coral.ai/models/
+[coral-get-started]:https://www.balena.io/docs/learn/getting-started/coral-dev/python/
 [balena]:https://www.balena.io/
-[getting-started-balena]:https://www.balena.io/docs/learn/getting-started
+[getting-started-balena]:https://www.balena.io/docs/learn/getting-started/coral-dev/python/
 [public-url]:https://www.balena.io/docs/learn/manage/actions/#enable-public-device-url
 [balena-devices]:https://www.balena.io/docs/reference/hardware/devices/
-[add-new-device-coral]:https://www.balena.io/docs/learn/getting-started/coral-dev/python/#add-your-first-device
 [balena-cli]:https://www.balena.io/docs/reference/balena-cli/
 [provision-device-coral]:https://www.balena.io/docs/learn/getting-started/coral-dev/python/#provision-device
