@@ -1,5 +1,6 @@
 # Streaming Object Detector with Coral and BalenaCloud
 
+
 This guide will help you deploy a streaming camera feed with realtime people detection using the [Coral Edge TPU][coral] for on-device ML inferencing. This example is designed to work with the [Coral Dev Board][coral-dev], but should work with other balena-compatible devices that have an Edge TPU.
 
 ![Demo Streaming Person Detector](images/demo.png)
