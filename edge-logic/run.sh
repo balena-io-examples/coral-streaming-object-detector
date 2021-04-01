@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Starting Web Server"
+
 # Run a simple classification on the supplied image. 
 # If the model or labels are not available, the container 
 # will exit and try again.
